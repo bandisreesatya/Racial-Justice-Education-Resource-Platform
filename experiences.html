@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Experiences - Racial Justice Education</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h2>Racial Justice Education</h2>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="resources.html" class="nav-link">Resources</a>
+                <a href="quiz.html" class="nav-link">Quiz</a>
+                <a href="experiences.html" class="nav-link active">Experiences</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <div class="auth-section" id="auth-section">
+                    <a href="login.html" class="nav-link login-btn">Login</a>
+                </div>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="page-content">
+        <div class="container">
+            <div class="page-title">
+                <h1>Share Your Experience</h1>
+                <p>Share your personal experiences and read stories from others in our community.</p>
+            </div>
+
+            <!-- Experience Form (Login Required) -->
+            <div id="experience-form-section">
+                <div class="experience-form">
+                    <h2>Share Your Story</h2>
+                    <div id="login-required-message" class="alert alert-info" style="display: none;">
+                        <p>Please <a href="login.html">log in</a> to share your experience with the community.</p>
+                    </div>
+                    <form id="experience-form" style="display: none;">
+                        <div class="form-group">
+                            <label for="experience-content">Your Experience</label>
+                            <textarea 
+                                id="experience-content" 
+                                rows="6" 
+                                placeholder="Share your experience, thoughts, or story related to racial justice. Your voice matters and can help others learn and grow."
+                                required
+                            ></textarea>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="anonymous-check">
+                            <label for="anonymous-check">Share anonymously</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Share Experience</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Experiences List -->
+            <div class="experiences-section">
+                <h2>Community Experiences</h2>
+                <div id="experiences-list" class="experiences-list">
+                    <!-- Experiences will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p> Racial Justice Education Platform. All rights reserved.</p>
+            <p>Promoting awareness and education for a just society.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setupExperiencePage();
+            loadExperiences();
+        });
+
+        function setupExperiencePage() {
+            const loginMessage = document.getElementById('login-required-message');
+            const experienceForm = document.getElementById('experience-form');
+            
+            if (currentUser) {
+                loginMessage.style.display = 'none';
+                experienceForm.style.display = 'block';
+                
+                // Setup form submission
+                experienceForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const content = document.getElementById('experience-content').value;
+                    const isAnonymous = document.getElementById('anonymous-check').checked;
+                    
+                    if (submitExperience(content, isAnonymous)) {
+                        document.getElementById('experience-content').value = '';
+                        document.getElementById('anonymous-check').checked = false;
+                    }
+                });
+            } else {
+                loginMessage.style.display = 'block';
+                experienceForm.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

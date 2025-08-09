@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational Resources - Racial Justice Education</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h2>Racial Justice Education</h2>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="resources.html" class="nav-link active">Resources</a>
+                <a href="quiz.html" class="nav-link">Quiz</a>
+                <a href="experiences.html" class="nav-link">Experiences</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <div class="auth-section" id="auth-section">
+                    <a href="login.html" class="nav-link login-btn">Login</a>
+                </div>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="page-content">
+        <div class="container">
+            <div class="page-title">
+                <h1>Educational Resources</h1>
+                <p>Explore our collection of articles, guides, and educational materials on racial justice.</p>
+            </div>
+
+            <!-- Category Filter -->
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <button onclick="filterResources('All')" class="btn btn-primary" id="filter-all">All</button>
+                <button onclick="filterResources('Constitutional Law')" class="btn btn-secondary" id="filter-constitutional">Constitutional Law</button>
+                <button onclick="filterResources('Social Welfare')" class="btn btn-secondary" id="filter-social">Social Welfare</button>
+                <button onclick="filterResources('Education')" class="btn btn-secondary" id="filter-education">Education</button>
+  
+
+            <!-- Resources Grid -->
+            <div class="resource-grid" id="resource-grid">
+                <!-- Indian Constitutional Articles -->
+                <div class="resource-card" data-category="Constitutional Law">
+                    <div class="resource-category">Constitutional Law</div>
+                    <h3>Article 15: Prohibition of Discrimination</h3>
+                    <p>Understanding the constitutional provision against discrimination based on religion, race, caste, sex, or place of birth.</p>
+                    <a href="https://www.constitutionofindia.net/articles/article-15-prohibition-of-discrimination-on-grounds-of-religion-race-caste-sex-or-place-of-birth/" target="_blank" class="btn btn-primary">Read Article</a>
+                </div>
+
+                <div class="resource-card" data-category="Social Welfare">
+                    <div class="resource-category">Social Welfare</div>
+                    <h3>Caste Discrimination Resources</h3>
+                    <p>Resources on understanding and combating caste-based discrimination in India.</p>
+                    <a href="https://socialwelfare.vikaspedia.in/viewcontent/social-welfare/women-and-child-development/child-development-1/resources-on-safe-childhood-for-panchayat-members/caste-discrimination?lgn=en" target="_blank" class="btn btn-primary">Read Article</a>
+                </div>
+
+                <div class="resource-card" data-category="Constitutional Law">
+                    <div class="resource-category">Constitutional Law</div>
+                    <h3>Article 14: Right to Equality</h3>
+                    <p>Comprehensive guide to the fundamental right to equality under Indian Constitution.</p>
+                    <a href="https://lawcrust.com/article-14-right-to-equality/" target="_blank" class="btn btn-primary">Read Article</a>
+                </div>
+
+                <div class="resource-card" data-category="Education">
+                    <div class="resource-category">Education</div>
+                    <h3>Right to Equality - BYJUS Guide</h3>
+                    <p>Educational resource explaining the right to equality and its implications.</p>
+                    <a href="https://byjus.com/free-ias-prep/right-to-equality/" target="_blank" class="btn btn-primary">Read Article</a>
+                </div>
+
+              
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p> Racial Justice Education Platform. All rights reserved.</p>
+            <p>Promoting awareness and education for a just society.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        let currentFilter = 'All';
+
+        function filterResources(category) {
+            currentFilter = category;
+            const cards = document.querySelectorAll('.resource-card');
+            
+            // Update button styles
+            document.querySelectorAll('[id^="filter-"]').forEach(btn => {
+                btn.className = 'btn btn-secondary';
+            });
+            
+            if (category === 'All') {
+                document.getElementById('filter-all').className = 'btn btn-primary';
+                cards.forEach(card => card.style.display = 'block');
+            } else {
+                const buttonMap = {
+                    'Constitutional Law': 'filter-constitutional',
+                    'Social Welfare': 'filter-social',
+                    'Education': 'filter-education',
+         
+                };
+                
+                if (buttonMap[category]) {
+                    document.getElementById(buttonMap[category]).className = 'btn btn-primary';
+                }
+                
+                cards.forEach(card => {
+                    if (card.dataset.category === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Register - Racial Justice Education</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h2>Racial Justice Education</h2>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="resources.html" class="nav-link">Resources</a>
+                <a href="quiz.html" class="nav-link">Quiz</a>
+                <a href="experiences.html" class="nav-link">Experiences</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <div class="auth-section" id="auth-section">
+                    <a href="login.html" class="nav-link login-btn active">Login</a>
+                </div>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="page-content">
+        <div class="container">
+            <!-- Login Form -->
+            <div id="login-section" class="form-container">
+                <h2 style="text-align: center; margin-bottom: 2rem;">Login to Your Account</h2>
+                
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+                </form>
+                
+                <p style="text-align: center; margin-top: 1.5rem;">
+                    Don't have an account? 
+                    <a href="#" onclick="showRegisterForm()" style="color: #2563eb; font-weight: 500;">Register here</a>
+                </p>
+            </div>
+
+            <!-- Register Form -->
+            <div id="register-section" class="form-container" style="display: none;">
+                <h2 style="text-align: center; margin-bottom: 2rem;">Create New Account</h2>
+                
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="register-name">Full Name</label>
+                        <input type="text" id="register-name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="register-email">Email Address</label>
+                        <input type="email" id="register-email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" required minlength="6">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="register-confirm-password">Confirm Password</label>
+                        <input type="password" id="register-confirm-password" required minlength="6">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Register</button>
+                </form>
+                
+                <p style="text-align: center; margin-top: 1.5rem;">
+                    Already have an account? 
+                    <a href="#" onclick="showLoginForm()" style="color: #2563eb; font-weight: 500;">Login here</a>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p> Racial Justice Education Platform. All rights reserved.</p>
+            <p>Promoting awareness and education for a just society.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Check if user is already logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            if (currentUser) {
+                // Redirect to home page if already logged in
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            setupAuthForms();
+        });
+
+        function setupAuthForms() {
+            // Login form submission
+            document.getElementById('login-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+                
+                if (!email || !password) {
+                    showAlert('Please fill in all fields.', 'error');
+                    return;
+                }
+                
+                if (!validateEmail(email)) {
+                    showAlert('Please enter a valid email address.', 'error');
+                    return;
+                }
+                
+                if (login(email, password)) {
+                    showAlert('Login successful! Redirecting...', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1500);
+                } else {
+                    showAlert('Invalid email or password. Please try again.', 'error');
+                }
+            });
+
+            // Register form submission
+            document.getElementById('register-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('register-name').value;
+                const email = document.getElementById('register-email').value;
+                const password = document.getElementById('register-password').value;
+                const confirmPassword = document.getElementById('register-confirm-password').value;
+                
+                if (!name || !email || !password || !confirmPassword) {
+                    showAlert('Please fill in all fields.', 'error');
+                    return;
+                }
+                
+                if (!validateEmail(email)) {
+                    showAlert('Please enter a valid email address.', 'error');
+                    return;
+                }
+                
+                if (password.length < 6) {
+                    showAlert('Password must be at least 6 characters long.', 'error');
+                    return;
+                }
+                
+                if (password !== confirmPassword) {
+                    showAlert('Passwords do not match.', 'error');
+                    return;
+                }
+                
+                if (register(name, email, password)) {
+                    showAlert('Registration successful! You can now log in.', 'success');
+                    showLoginForm();
+                    // Clear register form
+                    document.getElementById('register-form').reset();
+                } else {
+                    showAlert('Email already exists. Please use a different email or log in.', 'error');
+                }
+            });
+        }
+
+        function showLoginForm() {
+            document.getElementById('login-section').style.display = 'block';
+            document.getElementById('register-section').style.display = 'none';
+        }
+
+        function showRegisterForm() {
+            document.getElementById('login-section').style.display = 'none';
+            document.getElementById('register-section').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
